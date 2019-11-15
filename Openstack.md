@@ -20,7 +20,7 @@ Contents
 * Definition
     The Openstack Project is an open source cloud computing platform that supports all types of cloud environments.
 * Architecture
-    ![Conceptual Architecture](C:/Users/eekomij/Documents/Conceptual_Architecture.png) 
+    ![Conceptual Architecture](/Conceptual_Architecture.png) 
 
 ---
 
