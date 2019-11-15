@@ -29,3 +29,9 @@ Contents
 
 ### 2. Openstack Services Types and Brief Definition
  
+---
+
+### 3. Request Flow for Launching an Instance in Openstack
+
+Below is the diagram that shows the request flow when launching an instance in Openstack.
+![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
