@@ -39,7 +39,7 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     Nova is a compute service.
 * Neutron
     Neutron is a networking service.
-* Cinder[^1]
+* Cinder<sup>1</sup>
     Cinder is a block storage service.
 ---
 
@@ -54,5 +54,5 @@ The diagram can be split into two big blocks; transformation of CLI request to r
 
 
 
-[^1]: Cinder is not essential when launching an instance, but this service is explained for it will be used in future developments. 
+<sup>1</sup>: Cinder is not essential when launching an instance, but this service is explained for it will be used in future developments. 
     
