@@ -21,8 +21,11 @@ Contents
     The OpenStack Project is an open source cloud computing platform that supports all types of cloud environments.
 * Architecture
     - Conceptual Architecture   
-     The below diagram shows the relationships among the OpenStack services.
-    ![Conceptual Architecture](/Conceptual_Architecture.png) 
+        The below diagram shows the relationships among the OpenStack services.
+        ![Conceptual Architecture](/Conceptual_Architecture.png) 
+    - Provider Network Architecture
+        Below is the service layout of provider networks.
+        ![Provider Network Service Layout](/Provider_Network.png)
 
 [//]: # (Successfuly uploaded image)
 
@@ -31,16 +34,24 @@ Contents
 ### 2. OpenStack Services Types and Brief Definition
 There are various kinds of services in OpenStack. As a minimum, the following services are essential when you launch an OpenStack project.
 * Keystone
-    Keystone is an identity service.
+
+[//]: # (Keystone is an identity service.)
 * Glance
-    Glance is an image service.
+
+[//]: # (Glance is an image service.)
 * Placement
+
 * Nova
-    Nova is a compute service.
+
+[//]: # (Nova is a compute service.)
 * Neutron
-    Neutron is a networking service.
-* Cinder<sup>1</sup>
-    Cinder is a block storage service.
+
+[//]: # (Neutron is a networking service.)
+* Cinder[^1]
+
+[//]: # (Cinder is a block storage service.)
+[//]: # (When opening file in Github, change [^1] to <sup>1</sup>)
+
 ---
 
 ### 3. Request Flow for Launching an Instance in OpenStack
@@ -54,5 +65,5 @@ The diagram can be split into two big blocks; transformation of CLI request to r
 
 
 
-<sup>1</sup>: Cinder is not essential when launching an instance, but this service is explained for it will be used in future developments. 
+[^1]: Cinder is not essential when launching an instance, but this service is explained for it will be used in future developments. 
     
