@@ -45,8 +45,23 @@ There are various kinds of services in OpenStack. As a minimum, the following se
 * #### Placement
     The placement API service was introduced within the nova repository and extracted to the placement repository in the Stein release. It is used to track resource provider inventories and usages. Placement is required by some of the other OpenStack services, notably nova. Two processes, Nova-compute and Nova-scheduler, host most of Nova's interaction with Placement.
 * #### Nova
+    Openstack Compute is used to host and manage cloud computing systems. Nova consists of the following areas and their components.
 
-[//]: # (Nova is a compute service.)
+    Nova-API Service
+    : Accepts and responds to end user compute API calls. The service supports the OpenStack Compute API. It enforces some policies and initiates most orchestration activities, such as running an instance.
+    
+    Nova-compute Service
+    : A worker daemon that creates and terminates virtual machine instances through hypervisor APIs.
+    
+    Nova-scheduler Service
+    : Takes a virtual machine instance request from the queue and determines on which compute server host it runs.
+    
+    Nova-conductor Module
+    : Mediates interactions between the nova-compute service and the database. It eliminates direct accesses to the cloud database made by the nova-compute service. 
+    
+    Nova-novncproxy Daemon
+    : Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
+    
 * #### Neutron
 
 [//]: # (Neutron is a networking service.)
