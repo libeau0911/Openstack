@@ -28,7 +28,7 @@ Contents
         Below is the service layout of provider networks.
         ![Provider Network Service Layout](/Provider_Network.png)
         
-        There are two networking options; provider network and self-service network. Provider networks lack support for self-service (private) networks, layer-3 (routing) services, and advanced services such as LBaaS [^1] and FWaaS [^2]. For future developments, it is necessary to use provider networks. Further explanations are in ['Neutron'](##Neutron) under OpenStack Services Types and Brief Definition.
+        There are two networking options; provider network and self-service network. Provider networks lack support for self-service (private) networks, layer-3 (routing) services, and advanced services such as LBaaS [^1] and FWaaS [^2]. For future developments, it is necessary to use provider networks. Further explanations are in ['Neutron'](#Neutron) under OpenStack Services Types and Brief Definition.
 
 [//]: # (Successfuly uploaded image)
 
@@ -47,7 +47,7 @@ There are various kinds of services in OpenStack. As a minimum, the following se
 * Nova
 
 [//]: # (Nova is a compute service.)
-* <a name="Neutron">Neutron</a>
+* # Neutron
 
 [//]: # (Neutron is a networking service.)
 * Cinder[^3]
