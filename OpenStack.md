@@ -23,7 +23,6 @@ Contents
     - Conceptual Architecture   
         The below diagram shows the relationships among the OpenStack services.
         ![Conceptual Architecture](/Conceptual_Architecture.png) 
-
     - Provider Network Architecture
         Below is the service layout of provider networks.
         ![Provider Network Service Layout](/Provider_Network.png)
