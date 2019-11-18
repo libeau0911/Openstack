@@ -36,21 +36,21 @@ Contents
 
 ### 2. OpenStack Services Types and Brief Definition
 There are various kinds of services in OpenStack. As a minimum, the following services are essential when you launch an OpenStack project.
-* Keystone
+* #### Keystone
 
 [//]: # (Keystone is an identity service.)
-* Glance
+* #### Glance
 
 [//]: # (Glance is an image service.)
-* Placement
+* #### Placement
 
-* Nova
+* #### Nova
 
 [//]: # (Nova is a compute service.)
-* ##### Neutron
+* #### Neutron
 
 [//]: # (Neutron is a networking service.)
-* Cinder[^3]
+* #### Cinder[^3]
 
 [//]: # (Cinder is a block storage service.)
 [//]: # (When opening file in Github, change [^1] to <sup>1</sup>)
