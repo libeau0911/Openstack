@@ -47,7 +47,7 @@ There are various kinds of services in OpenStack. As a minimum, the following se
 * Nova
 
 [//]: # (Nova is a compute service.)
-* # Neutron
+* <a id="Neutron>Neutron</a>
 
 [//]: # (Neutron is a networking service.)
 * Cinder[^3]
