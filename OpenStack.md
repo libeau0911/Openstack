@@ -47,19 +47,19 @@ There are various kinds of services in OpenStack. As a minimum, the following se
 * #### Nova
     Openstack Compute is used to host and manage cloud computing systems. Nova consists of the following areas and their components.
 
-    Nova-API Service
+    **Nova-API Service**
     : Accepts and responds to end user compute API calls. The service supports the OpenStack Compute API. It enforces some policies and initiates most orchestration activities, such as running an instance.
     
-    Nova-compute Service
+    **Nova-compute Service**
     : A worker daemon that creates and terminates virtual machine instances through hypervisor APIs.
     
-    Nova-scheduler Service
+    **Nova-scheduler Service**
     : Takes a virtual machine instance request from the queue and determines on which compute server host it runs.
     
-    Nova-conductor Module
+    **Nova-conductor Module**
     : Mediates interactions between the nova-compute service and the database. It eliminates direct accesses to the cloud database made by the nova-compute service. 
     
-    Nova-novncproxy Daemon
+    **Nova-novncproxy Daemon**
     : Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
     
 * #### Neutron
