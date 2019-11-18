@@ -21,8 +21,10 @@ Contents
     The OpenStack Project is an open source cloud computing platform that supports all types of cloud environments.
 * Architecture
     - Conceptual Architecture   
+    
         The below diagram shows the relationships among the OpenStack services.
-        ![Conceptual Architecture](/Conceptual_Architecture.png) 
+        ![Conceptual Architecture](/Conceptual_Architecture.png)
+        
     - Provider Network Architecture
     
         Below is the service layout of provider networks.
@@ -37,13 +39,11 @@ Contents
 ### 2. OpenStack Services Types and Brief Definition
 There are various kinds of services in OpenStack. As a minimum, the following services are essential when you launch an OpenStack project.
 * #### Keystone
-
-[//]: # (Keystone is an identity service.)
+    Keystone is an identity service in OpenStack. It manages authentication and authorization of services required in cloud needs. Each OpenStack service in the deployment needs a service entry with corresponding endpoints stored in the Identity Service. 
 * #### Glance
-
-[//]: # (Glance is an image service.)
+    Glance is an image service that enables users to discover, register, and retrieve virtual machine images. It supports the storage of disk or server images on various repository types. The OpenStack image service includes glance-API and glance-registry. Glance-API accept image API calls for image discovery, retrieval, and storage. Glance-registry stores, processes, and retrieves metadata about size and types of images. The image metadata is in the database, in my case, MariaDB. Exposing glance-registry to users is unnecessary, for it is a private internal service.
 * #### Placement
-
+    The placement API service was introduced within the nova repository and extracted to the placement repository in the Stein release. It is used to track resource provider inventories and usages. Placement is required by some of the other OpenStack services, notably nova. Two processes, Nova-compute and Nova-scheduler, host most of Nova's interaction with Placement.
 * #### Nova
 
 [//]: # (Nova is a compute service.)
