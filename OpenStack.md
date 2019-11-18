@@ -63,10 +63,10 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     : Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
     
 * #### Neutron
+    Neutron is a networking service in OpenStack. It allows you to create and attach interface devices managed by other OpenStack services to networks. The neutron-server accepts and routes API requests to the appropriate OpenStack Networking plug-in for action. Plugging and unplugging ports, creating networks or subnets, and providing IP addresses are capable. To route information between the neutron-server and various agents, the messaging queue(RabbitMQ) is used. It also acts as a database to store networking state for particular plug-ins.
 
-[//]: # (Neutron is a networking service.)
 * #### Cinder[^3]
-
+    
 [//]: # (Cinder is a block storage service.)
 [//]: # (When opening file in Github, change [^1] to <sup>1</sup>)
 
