@@ -5,12 +5,14 @@ Contents
 1. Definition and Architecture
     * Definition
     * Architecture
+    
 2. OpenStack Services Types and Brief Definition
     1. Keystone
     2. Glance    
     3. Placement
     4. Nova  
     5. Neutron
+    
 3. Request Flow for Launching an Instance in OpenStack
 
 ---
@@ -70,7 +72,7 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     
     To verify the successful launch of the neutron agents, use the command below.
     ~~~
-    openstack network agent list
+    [root@controller ~]# openstack network agent list
     ~~~
     If the networking service successfully installed, the output should indicate three agents on the controller node and one agent on each compute node.
 
@@ -84,10 +86,16 @@ Below is the diagram that shows the request flow when launching an instance in O
 ![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
 
 The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron).
+- Transformation of CLI request to running instances 
+    qwer
+       ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
 
+    qwer
+- Network Connections between compute nodes and instances
+    qwer
+       ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.png)
 
-
-
+    qwer
 
 [^1]: Load Balance as a Service
 [^2]: Firewall as a Service
