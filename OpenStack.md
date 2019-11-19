@@ -93,7 +93,7 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     qwer
 - Network Connections between compute nodes and instances
     qwer
-       ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.png)
+       ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
 
     qwer
 
