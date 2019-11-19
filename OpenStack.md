@@ -86,6 +86,8 @@ Below is the diagram that shows the request flow when launching an instance in O
 ![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
 
 The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron).
+<ul>
+<li>
 + Transformation of CLI request to running instances 
     Three nova packages on the controller side; nova-API, nova-conductor, nova-scheduler; are related to creating instances. Nova-compute on the compute node supports several hypervisors to deploy instances or VMs.     Nova-API's role in creating an instance is it launches a new situation. Nova-scheduler searches for the appropriate host to install the VM and nova-conductor connect between database and nova-compute. The below diagram shows the connection between each service.
        ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
@@ -104,6 +106,8 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     <li>12. Nova-conductor sends the rpc.cast by the message queue to nova-compute for returning the instance information</li>
     <li>13. Nova-compute picks the instance information from the queue</li>
     </ol>
+</li>
+</ul>
     
 + Network Connections between compute nodes and instances
     qwer
