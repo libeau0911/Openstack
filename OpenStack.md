@@ -86,29 +86,24 @@ Below is the diagram that shows the request flow when launching an instance in O
 ![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
 
 The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron).
-<ul>
-<li>
+
 + Transformation of CLI request to running instances 
     Three nova packages on the controller side; nova-API, nova-conductor, nova-scheduler; are related to creating instances. Nova-compute on the compute node supports several hypervisors to deploy instances or VMs.     Nova-API's role in creating an instance is it launches a new situation. Nova-scheduler searches for the appropriate host to install the VM and nova-conductor connect between database and nova-compute. The below diagram shows the connection between each service.
        ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
-    <ol>
-    <li>1. Client requests for authentication to Keystone / Keystone pass authentication token to Client</li>
-    <li>2. Client converts new instance request to REST API request and sends it to nova-API</li>
-    <li>3. Nova-API receives the request and sends the request to Keystone to validate auth-token / Keystone confirms the token and sends it back</li>
-    <li>4. Nova-API interacts with the database ( MariaDB ) to create initial DB entry for a new instance</li>
-    <li>5. Nova-API sends the rpc.call request by message queue ( RabbitMQ ) to nova-scheduler to get updated instance entry with host ID specified</li>
-    <li>6. Nova-scheduler picks the request from the queue</li>
-    <li>7. Nova-scheduler interacts with the database to find  an appropriate host</li>
-    <li>8. Nova-scheduler sends the rpc.cast by the message queue to nova-compute for launching the instance on a suitable host</li>
-    <li>9. Nova-compute picks the request from the queue and sends the rpc.call request to nova-conductor to fetch the instance information</li>
-    <li>10. Nova-conductor picks the request from the queue</li>
-    <li>11. Nova-conductor interacts with the database and returns the instance information</li>
-    <li>12. Nova-conductor sends the rpc.cast by the message queue to nova-compute for returning the instance information</li>
-    <li>13. Nova-compute picks the instance information from the queue</li>
-    </ol>
-</li>
-</ul>
-    
+    1. Client requests for authentication to Keystone / Keystone pass authentication token to Client
+    2. Client converts new instance request to REST API request and sends it to nova-API
+    3. Nova-API receives the request and sends the request to Keystone to validate auth-token / Keystone confirms the token and sends it back
+    4. Nova-API interacts with the database ( MariaDB ) to create initial DB entry for a new instance
+    5. Nova-API sends the rpc.call request by message queue ( RabbitMQ ) to nova-scheduler to get updated instance entry with host ID specified
+    6. Nova-scheduler picks the request from the queue
+    7. Nova-scheduler interacts with the database to find  an appropriate host
+    8. Nova-scheduler sends the rpc.cast by the message queue to nova-compute for launching the instance on a suitable host
+    9. Nova-compute picks the request from the queue and sends the rpc.call request to nova-conductor to fetch the instance information
+    10. Nova-conductor picks the request from the queue
+    11. Nova-conductor interacts with the database and returns the instance information
+    12. Nova-conductor sends the rpc.cast by the message queue to nova-compute for returning the instance information<
+    13. Nova-compute picks the instance information from the queue<
+
 + Network Connections between compute nodes and instances
     qwer
        ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
