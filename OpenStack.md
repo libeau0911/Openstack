@@ -86,12 +86,17 @@ Below is the diagram that shows the request flow when launching an instance in O
 ![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
 
 The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron).
-- Transformation of CLI request to running instances 
-    qwer
++ Transformation of CLI request to running instances 
+    qwe
        ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
 
-    qwer
-- Network Connections between compute nodes and instances
+    1. Client requests authentication to Keystone
+    2. Keystone passes authentication token to Client
+    3. Client converts new instance request to REST API request and send it to Nova-API
+    4. Nova-API receive
+    5.
+    
++ Network Connections between compute nodes and instances
     qwer
        ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
 
