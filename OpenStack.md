@@ -11,7 +11,6 @@ Contents
     3. Placement
     4. Nova  
     5. Neutron
-    6. Cinder
 3. Request Flow for Launching an Instance in OpenStack
 
 ---
@@ -75,9 +74,6 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     ~~~
     If the networking service successfully installed, the output should indicate three agents on the controller node and one agent on each compute node.
 
-* #### Cinder[^3] 
-    
-[//]: # (Cinder is a block storage service.)
 [//]: # (When opening file in Github, change [^1] to <sup>1</sup>)
 
 ---
@@ -95,5 +91,3 @@ The diagram can be split into two big blocks; transformation of CLI request to r
 
 [^1]: Load Balance as a Service
 [^2]: Firewall as a Service
-[^3]: Cinder is not essential when launching an instance, but this service is explained for it will be used in future developments. 
-
