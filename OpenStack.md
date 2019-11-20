@@ -39,13 +39,13 @@ Contents
 
 ### 2. OpenStack Services Types and Brief Definition
 There are various kinds of services in OpenStack. As a minimum, the following services are essential when you launch an OpenStack project.
-* #### Keystone
+* #### Keystone ####
     Keystone is an identity service in OpenStack. It manages authentication and authorization of services required in cloud needs. Each OpenStack service in the deployment needs a service entry with corresponding endpoints stored in the Identity Service. 
-* #### Glance
+* #### Glance ####
     Glance is an image service that enables users to discover, register, and retrieve virtual machine images. It supports the storage of disk or server images on various repository types. The OpenStack image service includes glance-API and glance-registry. Glance-API accept image API calls for image discovery, retrieval, and storage. Glance-registry stores, processes, and retrieves metadata about size and types of images. The image metadata is in the database, in my case, MariaDB. Exposing glance-registry to users is unnecessary, for it is a private internal service.
-* #### Placement
+* #### Placement ####
     The placement API service was introduced within the nova repository and extracted to the placement repository in the Stein release. It is used to track resource provider inventories and usages. Placement is required by some of the other OpenStack services, notably nova. Two processes, Nova-compute and Nova-scheduler, host most of Nova's interaction with Placement.
-* #### Nova
+* #### Nova ####
     Openstack Compute is used to host and manage cloud computing systems. Nova consists of the following areas and their components.
 
     **Nova-API Service**
@@ -63,7 +63,7 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     **Nova-novncproxy Daemon**
     : Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
     
-* #### Neutron
+* #### Neutron ####
     Neutron is a networking service in OpenStack. It allows you to create and attach interface devices managed by other OpenStack services to networks. The neutron-server accepts and routes API requests to the appropriate OpenStack Networking plug-in for action. Plugging and unplugging ports, creating networks or subnets, and providing IP addresses are capable. To route information between the neutron-server and various agents, the messaging queue(RabbitMQ) is used. It also acts as a database to store networking state for particular plug-ins.
     
     Any given Networking set up has on or more external and internal networks. IP addresses are accessible by anyone who is physically on the external network. Internal networks connect directly to the VMs. For the outside networks to access VMs, and vice versa, routers between the networks are needed. Each router has a gateway that connects to an external network and one or more interfaces connected to internal networks. 
@@ -87,7 +87,7 @@ Below is the diagram that shows the request flow when launching an instance in O
 
 The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron).
 
-+ #### Transformation of CLI request to running instances 
++ #### Transformation of CLI request to running instances ####
     Three nova packages on the controller side; nova-API, nova-conductor, nova-scheduler; are related to creating instances. Nova-compute on the compute node supports several hypervisors to deploy instances or VMs. 
     
     Nova-API's role in creating an instance is it launches a new situation. Nova-scheduler searches for the appropriate host to install the VM and nova-conductor connect between database and nova-compute. The below diagram shows the connection between each service.
@@ -107,7 +107,7 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     12. Nova-conductor sends the rpc.cast by the message queue to nova-compute for returning the instance information
     13. Nova-compute picks the instance information from the queue
 
-+ #### Network Connections between compute nodes and instances
++ #### Network Connections between compute nodes and instances ####
     qwer
        ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
 
