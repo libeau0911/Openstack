@@ -111,7 +111,7 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
     1. Nova-compute passes auth-token to Neutron-server to allocate and configure the network for the instance
     2. Neutron-server sends auth-token to Keystone for validation / Keystone confirms the token and sends it back
-    3. Neutron-server sends the rpc.call request by message queue to request an IP address( DHCP-agent ) and L2 configuration( Linuxbridge-agent)
+    3. Neutron-server sends the rpc.call request by message queue to request an IP address and L2 configuration
     
 	**The request of the IP address**
     
