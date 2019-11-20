@@ -92,7 +92,6 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     
     Nova-API's role in creating an instance is it launches a new situation. Nova-scheduler searches for the appropriate host to install the VM and nova-conductor connect between database and nova-compute. The below diagram shows the connection between each service.
        ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
-    
     1. Client requests for authentication to Keystone / Keystone pass authentication token to Client
     2. Client converts new instance request to REST API request and sends it to nova-API
     3. Nova-API receives the request and sends the request to Keystone to validate auth-token / Keystone confirms the token and sends it back
@@ -110,8 +109,21 @@ The diagram can be split into two big blocks; transformation of CLI request to r
 + #### Network Connections between compute nodes and instances ####
     qwer
        ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
-
-    qwer
+    1. Nova-compute passes auth-token to Neutron-server to allocate and configure the network for the instance
+    2. Neutron-server sends auth-token to Keystone for validation / Keystone confirms the token and sends it back
+    3. Neutron-server sends the rpc.call request by message queue to request an IP address( DHCP-agent ) and L2 configuration( Linuxbridge-agent)
+	**The request of the IP address**
+    4. Neutron-DHCP-Agent picks the request from the queue
+    5. Neutron-DHCP-Agent interacts with dnsmasq to allocate the IP address
+    6. Neutron-DHCP-Agent returns the IP address information
+    7. Neutron-server reads the IP address from the message queue
+	**The request of L2 configuration**
+    8. Neutron-LinuxBridge-Agent picks the request from the queue
+    9. Neutron-LinuxBridge-Agent interacts with libvirt to configure Linux bridge
+    10. Neutron-LinuxBridge-Agent returns the Linux bridge configuration
+    11. Neutron-server reads the configuration from the message queue
+    12. Neutron-server saves instance network state in the database
+    13. Neutron-server passes the network information to Nova-compute
 
 [^1]: Load Balance as a Service
 [^2]: Firewall as a Service
