@@ -114,12 +114,14 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     3. Neutron-server sends the rpc.call request by message queue to request an IP address( DHCP-agent ) and L2 configuration( Linuxbridge-agent)
     
 	**The request of the IP address**
+    
     4. Neutron-DHCP-Agent picks the request from the queue
     5. Neutron-DHCP-Agent interacts with dnsmasq to allocate the IP address
     6. Neutron-DHCP-Agent returns the IP address information
     7. Neutron-server reads the IP address from the message queue
     
 	**The request of L2 configuration**
+    
     8. Neutron-LinuxBridge-Agent picks the request from the queue
     9. Neutron-LinuxBridge-Agent interacts with libvirt to configure Linux bridge
     10. Neutron-LinuxBridge-Agent returns the Linux bridge configuration
