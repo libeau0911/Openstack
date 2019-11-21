@@ -74,16 +74,20 @@ There are various kinds of services in OpenStack. As a minimum, the following se
 	Between two network options, I will configure with provider networks. Provider networks map to actual physical networks or VLANs and can only be set up by an admin.
     
     **ML2 plug-in**
+    
     To set up a provider network, first, configure the Modular Layer 2 (ML2) plug-in. The ML2 plug-in uses the Linux bridge mechanism to build layer-2, bridging and switching, virtual networking infrastructure for instances. Beyond various type drivers, flat and VLAN are enable. Flat networks make every instance in the same network. For example, if the compute node and the network node is using 20.20.20.0/24, the virtual machine will also have the same network. ML2 plug-in also provides the mechanism driver. A mechanism driver makes the system able to connect two other compute nodes with different networks. Linux bridge mechanism is the mechanism driver used.
     After completing the setup of the plug-in, the configuration of the Linux bridge agent, DHCP agent, and metadata agent is necessary.
 
     **Neutron-Linuxbridge agent**
+    
     An L2 agent makes and stabilizes the virtual infrastructure. There are OVS(Open vSwitch) and Linux-bridge as kinds of L2 agents. Between the two of them, the Linux-bridge agent is a virtual interface that connects various network interfaces. Libvirt interacts with the Linux-bridge agent. Libvirt is a virtualized library API, and the usage is when interaction with hypervisors, that support OpenStack, is needed. 
     
     **Neutron-DHCP agent**
+    
     Neutron DHCP agent has a role that assigns IP addresses to the VMs located on the virtual network using dnsmasq.
     
     **Neutron-metadata Agent**
+    
     The metadata agent provides IP address or instance information that is needed while booting VM instance.
     
     To verify the successful launch of the neutron agents, use the command below.
