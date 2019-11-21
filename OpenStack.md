@@ -5,7 +5,6 @@ Contents
 1. Definition and Architecture
     * Definition
     * Architecture
-    
 2. OpenStack Services Types and Brief Definition
     1. Keystone
     2. Glance    
@@ -13,8 +12,10 @@ Contents
     4. Nova  
     5. Neutron
     6. Cinder
-    
 3. Request Flow for Launching an Instance in OpenStack
+    1. Transformation of CLI Request to Running Instances
+    2. Network Connections between Compute Nodes and Instances
+    3. Other Interactions between the New Instance and Components in OpenStack
 
 ---
 
