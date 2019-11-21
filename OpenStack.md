@@ -35,7 +35,7 @@ Contents
 
         The architecture of an OpenStack project requires at least two nodes to launch an instance. As seen in the image, the controller node runs the Identity service, Image service, Placement service, management portions of Compute, management portion of Networking, various Networking agents, and the Dashboard. It also includes supporting services such as database, message queue, and NTP. The compute node runs the hypervisor portion of Compute that operates instances. This node also runs a Networking service agent that connects instances to virtual networks.
         
-        There are two networking options; provider network and self-service network. Provider networks lack support for self-service (private) networks, layer-3 (routing) services, and advanced services such as LBaaS [^1] and FWaaS [^2]. For future developments, it is necessary to use provider networks. Further explanations are in ['Neutron'](#Neutron) under ['OpenStack Services Types and Brief Definition'](#2-OpenStack-Services-Types-and-Brief-Definition).
+        There are two networking options; provider network and self-service network. Provider networks lack support for self-service (private) networks, layer-3 (routing) services, and advanced services such as LBaaS<sup>1</sup> and FWaaS<sup>2</sup>. For future developments, it is necessary to use provider networks. Further explanations are in ['Neutron'](#Neutron) under ['OpenStack Services Types and Brief Definition'](#2-OpenStack-Services-Types-and-Brief-Definition).
 
 [//]: # (Successfuly uploaded image)
 
@@ -171,5 +171,5 @@ RPC.cast does not require a response, which the above request means to launch th
     2. Cinder-API validates the auth-token with keystone
     3. Cinder-API returns the volume information to Nova-compute
     
-[^1]: Load Balance as a Service
-[^2]: Firewall as a Service
+<sup>1</sup>: Load Balance as a Service
+<sup>2</sup>: Firewall as a Service
