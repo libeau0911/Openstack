@@ -129,7 +129,7 @@ RPC.cast does not require a response, which the above request means to launch th
     13. Nova-compute picks the instance information from the queue
 
 + #### Network connections between compute nodes and instances ####
-    
+    Neutron is the network service in OpenStack. Neutron-DHCP-Agent and Neutron-LinuxBridge-Agent are the main factors needed while launching a new instance. Neutron-DHCP-Agent connects with dnsmasq, which assigns the IP address to VM. On the other hand, Neutron-LinuxBridge-Agent connects with libvirt. Libvirt is a virtualized library API that interacts with hypervisors that support Openstack.
     ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
     1. Nova-compute passes auth-token to Neutron-server to allocate and configure the network for the instance
     2. Neutron-server sends auth-token to Keystone for validation / Keystone confirms the token and sends it back
