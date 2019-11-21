@@ -12,6 +12,7 @@ Contents
     3. Placement
     4. Nova  
     5. Neutron
+    6. Cinder
     
 3. Request Flow for Launching an Instance in OpenStack
 
@@ -90,6 +91,9 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     [root@controller ~]# openstack network agent list
     ~~~
     If the networking service successfully installed, the output should indicate three agents on the controller node and one agent on each compute node.
+
+* #### Cinder ####
+    Cinder is a block storage service in OpenStack. Block storage provides an infrastructure for managing strengths and interacts with OpenStack compute to generate volumes for instances. This service also enables the management of volume snapshots and volume types. The Cinder configuration references one storage node with an empty local block storage device.
 
 [//]: # (When opening file in Github, change [^1] to <sup>1</sup>)
 
