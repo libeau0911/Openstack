@@ -171,6 +171,6 @@ RPC.cast does not require a response, which the above request means to launch th
     2. Cinder-API validates the auth-token with keystone
     3. Cinder-API returns the volume information to Nova-compute
     
-<sup>1</sup>: Load Balance as a Service
-
-<sup>2</sup>: Firewall as a Service
+<sup>1</sup> Load Balance as a Service
+<p></p>
+<sup>2</sup> Firewall as a Service
