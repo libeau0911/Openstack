@@ -150,6 +150,7 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     1. Nova-compute does the REST call to glance-API to get Image URI by Image ID from Glance
     2. Glance-API validates the auth-token with keystone
     3. Glance-API returns the image URI to Nova-compute
+
     **Cinder**
     1. Nova-compute requests for the volume data to Cinder
     2. Cinder-API validates the auth-token with keystone
