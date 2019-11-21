@@ -30,6 +30,7 @@ Contents
     
         Below is the service layout of provider networks.
         ![Provider Network Service Layout](/Provider_Network.png)
+
         The architecture of an OpenStack project requires at least two nodes to launch an instance. As seen in the image, the controller node runs the Identity service, Image service, Placement service, management portions of Compute, management portion of Networking, various Networking agents, and the Dashboard. It also includes supporting services such as database, message queue, and NTP.
 
         There are two networking options; provider network and self-service network. Provider networks lack support for self-service (private) networks, layer-3 (routing) services, and advanced services such as LBaaS [^1] and FWaaS [^2]. For future developments, it is necessary to use provider networks. Further explanations are in ['Neutron'](#Neutron) under ['OpenStack Services Types and Brief Definition'](#2-OpenStack-Services-Types-and-Brief-Definition).
