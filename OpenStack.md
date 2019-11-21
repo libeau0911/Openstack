@@ -32,7 +32,7 @@ Contents
         ![Provider Network Service Layout](/Provider_Network.png)
 
         The architecture of an OpenStack project requires at least two nodes to launch an instance. As seen in the image, the controller node runs the Identity service, Image service, Placement service, management portions of Compute, management portion of Networking, various Networking agents, and the Dashboard. It also includes supporting services such as database, message queue, and NTP. The compute node runs the hypervisor portion of Compute that operates instances. This node also runs a Networking service agent that connects instances to virtual networks.
-
+        
         There are two networking options; provider network and self-service network. Provider networks lack support for self-service (private) networks, layer-3 (routing) services, and advanced services such as LBaaS [^1] and FWaaS [^2]. For future developments, it is necessary to use provider networks. Further explanations are in ['Neutron'](#Neutron) under ['OpenStack Services Types and Brief Definition'](#2-OpenStack-Services-Types-and-Brief-Definition).
 
 [//]: # (Successfuly uploaded image)
@@ -122,7 +122,7 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     12. Nova-conductor sends the rpc.cast by the message queue to nova-compute for returning the instance information
     13. Nova-compute picks the instance information from the queue
 
-+ #### Network Connections between compute nodes and instances ####
++ #### Network connections between compute nodes and instances ####
     qwer
     ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
     1. Nova-compute passes auth-token to Neutron-server to allocate and configure the network for the instance
@@ -144,6 +144,16 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     11. Neutron-server reads the configuration from the message queue
     12. Neutron-server saves instance network state in the database
     13. Neutron-server passes the network information to Nova-compute
-
+     
++ #### Other interactions between the new instance and components in OpenStack ####
+    **Glance**
+    1. Nova-compute does the REST call to glance-API to get Image URI by Image ID from Glance
+    2. Glance-API validates the auth-token with keystone
+    3. Glance-API returns the image URI to Nova-compute
+    **Cinder**
+    1. Nova-compute requests for the volume data to Cinder
+    2. Cinder-API validates the auth-token with keystone
+    3. Cinder-API returns the volume information to Nova-compute
+    
 [^1]: Load Balance as a Service
 [^2]: Firewall as a Service
