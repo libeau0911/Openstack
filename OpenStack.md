@@ -100,8 +100,14 @@ There are various kinds of services in OpenStack. As a minimum, the following se
 Below is the diagram that shows the request flow when launching an instance in OpenStack.
 ![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
 
+The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron). During the request flow, there are two kinds of requests made in the message queue, RPC.call, and RPC.cast. In simple words, RPC.call waits for a response, while RPC.cast does not expect a response. Below is an example of RPC.call and RPC.cast.
+> Nova-API sends the rpc.call request to nova-scheduler expecting to get updated instance entry with host ID specified.
 
-The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron).
+Since nova-API have requested an RPC.call to nova-scheduler, the nova-scheduler should reply to nova-API with an updated instance entry with host ID identified.
+
+> Nova-scheduler sends the RPC.cast request to nova-compute for launching the instance on the appropriate host.
+
+RPC.cast does not require a response, which the above request means to launch the instance on the appropriate host without replying to nova-scheduler.
 
 + #### Transformation of CLI request to running instances ####
     Three nova packages on the controller side; nova-API, nova-conductor, nova-scheduler; are related to creating instances. Nova-compute on the compute node supports several hypervisors to deploy instances or VMs. 
@@ -123,7 +129,7 @@ The diagram can be split into two big blocks; transformation of CLI request to r
     13. Nova-compute picks the instance information from the queue
 
 + #### Network connections between compute nodes and instances ####
-    qwer
+    
     ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
     1. Nova-compute passes auth-token to Neutron-server to allocate and configure the network for the instance
     2. Neutron-server sends auth-token to Keystone for validation / Keystone confirms the token and sends it back
