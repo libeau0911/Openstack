@@ -172,4 +172,5 @@ RPC.cast does not require a response, which the above request means to launch th
     3. Cinder-API returns the volume information to Nova-compute
     
 <sup>1</sup>: Load Balance as a Service
+
 <sup>2</sup>: Firewall as a Service
