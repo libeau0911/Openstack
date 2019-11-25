@@ -42,12 +42,16 @@ OpenStack
 ### 2. 오픈스택 서비스 종류 및 정의 
 
 오픈스택에는 다양한 종류의 서비스들이 존재한다. 그 중 오픈스택 프로젝트를 생성하는 데 필수적으로 필요한 서비스들에 대해서만 설명하도록 하겠다.
+
 * #### Keystone ####
     Keystone은 오픈스택의 인증 서비스이다. 이 서비스는 클라우드가 필요로 하는 서비스들에 대한 인증과 권한을 부여해주는 역할을 가지고 있다. 모든 오픈스택 서비스들은 Keystone을 거쳐야만 자원을 사용할 수 있다.
+
 * #### Glance ####
     Glance는 사용자들이 VM의 이미지의 삭제ㆍ정보ㆍ수정 등 관리를 할 수 있도록 하는 서비스이다. 여기서 이미지란, 인스턴스에 필요한 운영체제가 설치된 이미지를 뜻한다. 이 서비스는 다양한 리포지토리의 서버 이미지 저장을 지원한다. Glance는 Glance-API와 Glance-registry로 구성되며, Glance-API는 이미지 삭제ㆍ정보ㆍ수정에 대한 API 요청을 수락하는 역할을 한다. Glance-registry는 크기 및 이미지 종류와 같은 메타데이터의 삭제ㆍ정보ㆍ저장을 맡고 있다. 이미지 메타데이터의 경우, 데이터베이스에 저장되어 있는데, 해당 프로젝트에서는 MariaDB를 사용한다. Glance-registry는 사용자에게 권한이 없는 서비스이다.
+
 * #### Placement ####
     Placement 서비스는 초기에 Nova 내부에 존재하던 서비스이며, Stein 버전에서 별도의 서비스로 소개되었다. 이 서비스는 리소스 프로바이더에 대한 인벤토리와 사용정보를 추적하는 데 사용된다. Placement는 주로 다른 서비스들이 요구하는 데, 특히 Nova에서 필요로 하는 서비스이다. Nova-compute, Nova-scheduler과 같은 프로세스들이 대표적으로 Placement를 이용한다.
+
 * #### Nova ####
     오픈스택 컴퓨트는 클라우드 컴퓨팅 시스템을 호스팅하고 관리하는 데 사용된다. Nova는 다음 영역과 해당 구성 요소로 구성된다.
     **Nova-API 서비스**
@@ -71,17 +75,14 @@ OpenStack
     VNC 연결을 통해 실행중인 인스턴스에 액세스하기 위한 프록시를 제공하며, 브라우저 기반 novnc 클라이언트를 지원한다.
     
 * #### Neutron ####
-    Neutron is a networking service in OpenStack. It allows you to create and attach interface devices managed by other OpenStack services to networks. The neutron-server accepts and routes API requests to the appropriate OpenStack Networking plug-in for action. Plugging and unplugging ports, creating networks or subnets, and providing IP addresses are capable. To route information between the neutron-server and various agents, the messaging queue(RabbitMQ) is used. It also acts as a database to store networking state for particular plug-ins.
-    
+    Neutron은 오픈스택의 네트워킹 서비스이다. 이 서비스는 다른 OpenStack 서비스로 관리되는 인터페이스 장치를 생성하여 네트워크에 연결할 수 있도록 한다. Neutron 서버는  API 요청을 승인하여 적절한 OpenStack Networking 플러그인으로 라우팅하여 조치를 취합니다. 이 서비스로 포트를 연결 및 분리, 네트워크 또는 서브넷을 생성, IP 주소를 제공하는 것이 가능하다. 또한 특정 플러그인의 네트워킹 상태를 저장하는 데이터베이스의 역할을 한다. Neutron server와 다양한 에이전트 간에 정보를 라우팅하기 위해서 메시지큐가 사용된다. 
     Any given Networking set up has on or more external and internal networks. IP addresses are accessible by anyone who is physically on the external network. Internal networks connect directly to the VMs. For the outside networks to access VMs, and vice versa, routers between the networks are needed. Each router has a gateway that connects to an external network and one or more interfaces connected to internal networks. 
     
 	Between two network options, I will configure with provider networks. Provider networks map to actual physical networks or VLANs and can only be set up by an admin.
-    
     **ML2 plug-in**
     
-    To set up a provider network, first, configure the Modular Layer 2 (ML2) plug-in. The ML2 plug-in uses the Linux bridge mechanism to build layer-2, bridging and switching, virtual networking infrastructure for instances. Beyond various type drivers, flat and VLAN are enable. Flat networks make every instance in the same network. For example, if the compute node and the network node is using 20.20.20.0/24, the virtual machine will also have the same network. ML2 plug-in also provides the mechanism driver. A mechanism driver makes the system able to connect two other compute nodes with different networks. Linux bridge mechanism is the mechanism driver used.
-    After completing the setup of the plug-in, the configuration of the Linux bridge agent, DHCP agent, and metadata agent is necessary.
-
+    프로바이더 네트워크를 설정하기 위해서는 먼저 Modular Layer 2 (ML2) 플러그인을 구성해야한다. ML2 플러그인은 Linux-bridge 메커니즘을 이용해 인스턴스를 위한 layer-2(브리징과 스위칭) 가상 네트워킹 인프라를 구축한다. 다양한 type drivers 중, flat와 VLAN이 사용가능하도록 설정한다. 플랫 네트워크는 모든 인스턴스를 같은 네트워크 상에 있도록 한다. 예를 들어, 컴퓨트 노드와 네트워크 노드가 20.20.20.0/24를 사용한다고 하였을 때, VM 역시 같은 네트워크 상에 존재하게 된다. ML2 플로그인은 메커니즘 드라이버도 제공한다. 메커니즘 드라이버는 각각 다른 네트워크를 사용하는 컴퓨트 노드들의 연결이 가능하도록 한다. 해당 프로젝트에서는 Linux-bridge 메커니즘을 사용하였다.
+    플러그인 설정을 완료한 후에는 Linux-bridge 에이전트, DHCP 에이전트 및 메타데이터 에이전트를 구성해야한다.
     **Neutron-Linuxbridge agent**
     
     L2 에이전트는 가상 인프라를 생성 및 안정화하는 역할을 가지고 있다. L2 에이전트에는 OVS(Open vSwitch)와 Linux-bridge가 있는데, 둘 중 Linux-bridge는 다양한 네트워크 인터페이스를 연결하는 가상의 인터페이스다. Libvirt는 Linux-bridge와 상호작용하는 가상화 라이브러리 API이다. Libvirt은 오픈스택을 지원하는 하이퍼바이저와의 소통이 필요할 때 이용된다.
@@ -99,6 +100,7 @@ OpenStack
     [root@controller ~]# openstack network agent list
     ~~~
     네트워킹 서비스가 성공적으로 설치되었으면, 결과화면으로 컨트롤러 노드에 세 에이전트, 컴퓨트 노드마다 하나의 에이전트가 표기되어야한다.
+
 * #### Cinder ####
     Cinder은 오픈스택의 블록 스토리지 서비스이다. 블록 스토리지는 volume을 관리하는 인프라를 제공하고 Openstack 컴퓨팅과 상호작용하여 인스턴스의 volume을 생성한다. 이 서비스는 또한 볼륨 스냅 샷 및 볼륨 유형을 관리 할 수 있게 한다. Cinder 구성은 빈 로컬 블록 저장 장치가있는 하나의 스토리지 노드를 참조한다.
 
