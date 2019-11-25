@@ -49,22 +49,27 @@ OpenStack
 * #### Placement ####
     Placement 서비스는 초기에 Nova 내부에 존재하던 서비스이며, Stein 버전에서 별도의 서비스로 소개되었다. 이 서비스는 리소스 프로바이더에 대한 인벤토리와 사용정보를 추적하는 데 사용된다. Placement는 주로 다른 서비스들이 요구하는 데, 특히 Nova에서 필요로 하는 서비스이다. Nova-compute, Nova-scheduler과 같은 프로세스들이 대표적으로 Placement를 이용한다.
 * #### Nova ####
-    Openstack Compute is used to host and manage cloud computing systems. Nova consists of the following areas and their components.
-
-    **Nova-API Service**
-    : Accepts and responds to end user compute API calls. The service supports the OpenStack Compute API. It enforces some policies and initiates most orchestration activities, such as running an instance.
+    오픈스택 컴퓨트는 클라우드 컴퓨팅 시스템을 호스팅하고 관리하는 데 사용된다. Nova는 다음 영역과 해당 구성 요소로 구성된다.
+    **Nova-API 서비스**
     
-    **Nova-compute Service**
-    : A worker daemon that creates and terminates virtual machine instances through hypervisor APIs.
+    해당 서비스는 사용자의 컴퓨팅 API 호출을 수락하고 응답한다. 이 서비스는 오픈스택 컴퓨트 API를 지원한다. 일부 정책을 시행하고 인스턴스 실행과 같은 대부분의 오케스트레이션 활동을 시행한다.
     
-    **Nova-scheduler Service**
-    : Takes a virtual machine instance request from the queue and determines on which compute server host it runs.
+    **Nova-compute 서비스**
     
-    **Nova-conductor Module**
-    : Mediates interactions between the nova-compute service and the database. It eliminates direct accesses to the cloud database made by the nova-compute service. 
+    하이퍼 바이저 API를 통해 가상 머신 인스턴스를 작성하고 종료하는 작업자 데몬이다.
     
-    **Nova-novncproxy Daemon**
-    : Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
+    **Nova-scheduler 서비스**
+    
+    VM 인스턴스 요청을 메시지큐에서 가져와 어떤 컴퓨트 서버에서 실행할지 결정하는 서비스이다.
+    
+    **Nova-conductor 모듈**
+    
+    nova-compute 서비스와 데이터베이스 간의 상호 작용을 중재한다. 클라우드 데이터베이스에 대한 nova-compute의 직접적인 접근이 일어나지 않도록 한다.
+    
+    **Nova-novncproxy 데몬**
+    
+    VNC 연결을 통해 실행중인 인스턴스에 액세스하기 위한 프록시를 제공하며, 브라우저 기반 novnc 클라이언트를 지원한다.
+    
 * #### Neutron ####
     Neutron is a networking service in OpenStack. It allows you to create and attach interface devices managed by other OpenStack services to networks. The neutron-server accepts and routes API requests to the appropriate OpenStack Networking plug-in for action. Plugging and unplugging ports, creating networks or subnets, and providing IP addresses are capable. To route information between the neutron-server and various agents, the messaging queue(RabbitMQ) is used. It also acts as a database to store networking state for particular plug-ins.
     
@@ -79,22 +84,21 @@ OpenStack
 
     **Neutron-Linuxbridge agent**
     
-    An L2 agent makes and stabilizes the virtual infrastructure. There are OVS(Open vSwitch) and Linux-bridge as kinds of L2 agents. Between the two of them, the Linux-bridge agent is a virtual interface that connects various network interfaces. Libvirt interacts with the Linux-bridge agent. Libvirt is a virtualized library API, and the usage is when interaction with hypervisors, that support OpenStack, is needed. 
+    L2 에이전트는 가상 인프라를 생성 및 안정화하는 역할을 가지고 있다. L2 에이전트에는 OVS(Open vSwitch)와 Linux-bridge가 있는데, 둘 중 Linux-bridge는 다양한 네트워크 인터페이스를 연결하는 가상의 인터페이스다. Libvirt는 Linux-bridge와 상호작용하는 가상화 라이브러리 API이다. Libvirt은 오픈스택을 지원하는 하이퍼바이저와의 소통이 필요할 때 이용된다.
     
     **Neutron-DHCP agent**
     
-    Neutron DHCP agent has a role that assigns IP addresses to the VMs located on the virtual network using dnsmasq.
+    Neutron DHCP agent는 dnsmasq를 이용하여 가상 네트워크에 위치한 VM들에게 IP주소를 할당해주는 역할을 가지고 있다.
     
     **Neutron-metadata Agent**
     
-    The metadata agent provides IP address or instance information that is needed while booting VM instance.
+    메타데이터 에이전트는 VM 인스턴스를 부팅하는 데 필요한 IP 주소 및 인스턴스 정보를 제공해준다.
     
-    To verify the successful launch of the neutron agents, use the command below.
+    Nuetron 에이전트들의 설치가 제대로 되었다는 것을 확인하고자 할 때, 아래의 명령어를 사용하면 된다.
     ~~~
     [root@controller ~]# openstack network agent list
     ~~~
-    If the networking service successfully installed, the output should indicate three agents on the controller node and one agent on each compute node.
-
+    네트워킹 서비스가 성공적으로 설치되었으면, 결과화면으로 컨트롤러 노드에 세 에이전트, 컴퓨트 노드마다 하나의 에이전트가 표기되어야한다.
 * #### Cinder ####
     Cinder은 오픈스택의 블록 스토리지 서비스이다. 블록 스토리지는 volume을 관리하는 인프라를 제공하고 Openstack 컴퓨팅과 상호작용하여 인스턴스의 volume을 생성한다. 이 서비스는 또한 볼륨 스냅 샷 및 볼륨 유형을 관리 할 수 있게 한다. Cinder 구성은 빈 로컬 블록 저장 장치가있는 하나의 스토리지 노드를 참조한다.
 
