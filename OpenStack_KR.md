@@ -65,7 +65,6 @@ OpenStack
     
     **Nova-novncproxy Daemon**
     : Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
-    
 * #### Neutron ####
     Neutron is a networking service in OpenStack. It allows you to create and attach interface devices managed by other OpenStack services to networks. The neutron-server accepts and routes API requests to the appropriate OpenStack Networking plug-in for action. Plugging and unplugging ports, creating networks or subnets, and providing IP addresses are capable. To route information between the neutron-server and various agents, the messaging queue(RabbitMQ) is used. It also acts as a database to store networking state for particular plug-ins.
     
@@ -97,7 +96,7 @@ OpenStack
     If the networking service successfully installed, the output should indicate three agents on the controller node and one agent on each compute node.
 
 * #### Cinder ####
-    Cinder is a block storage service in OpenStack. Block storage provides an infrastructure for managing strengths and interacts with OpenStack compute to generate volumes for instances. This service also enables the management of volume snapshots and volume types. The Cinder configuration references one storage node with an empty local block storage device.
+    Cinder은 오픈스택의 블록 스토리지 서비스이다. 블록 스토리지는 volume을 관리하는 인프라를 제공하고 Openstack 컴퓨팅과 상호작용하여 인스턴스의 volume을 생성한다. 이 서비스는 또한 볼륨 스냅 샷 및 볼륨 유형을 관리 할 수 있게 한다. Cinder 구성은 빈 로컬 블록 저장 장치가있는 하나의 스토리지 노드를 참조한다.
 
 [//]: # (When opening file in Github, change [^1] to <sup>1</sup>)
 
