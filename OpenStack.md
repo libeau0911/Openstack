@@ -53,19 +53,24 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     Openstack Compute is used to host and manage cloud computing systems. Nova consists of the following areas and their components.
 
     **Nova-API Service**
-    : Accepts and responds to end user compute API calls. The service supports the OpenStack Compute API. It enforces some policies and initiates most orchestration activities, such as running an instance.
+    
+    Accepts and responds to end user compute API calls. The service supports the OpenStack Compute API. It enforces some policies and initiates most orchestration activities, such as running an instance.
     
     **Nova-compute Service**
-    : A worker daemon that creates and terminates virtual machine instances through hypervisor APIs.
+    
+    A worker daemon that creates and terminates virtual machine instances through hypervisor APIs.
     
     **Nova-scheduler Service**
-    : Takes a virtual machine instance request from the queue and determines on which compute server host it runs.
+    
+    Takes a virtual machine instance request from the queue and determines on which compute server host it runs.
     
     **Nova-conductor Module**
-    : Mediates interactions between the nova-compute service and the database. It eliminates direct accesses to the cloud database made by the nova-compute service. 
+    
+    Mediates interactions between the nova-compute service and the database. It eliminates direct accesses to the cloud database made by the nova-compute service. 
     
     **Nova-novncproxy Daemon**
-    : Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
+    
+    Provides a proxy for accessing running instances through a VNC connection. Supports browser-based novnc clients.
     
 * #### Neutron ####
     Neutron is a networking service in OpenStack. It allows you to create and attach interface devices managed by other OpenStack services to networks. The neutron-server accepts and routes API requests to the appropriate OpenStack Networking plug-in for action. Plugging and unplugging ports, creating networks or subnets, and providing IP addresses are capable. To route information between the neutron-server and various agents, the messaging queue(RabbitMQ) is used. It also acts as a database to store networking state for particular plug-ins.
@@ -98,7 +103,7 @@ There are various kinds of services in OpenStack. As a minimum, the following se
     If the networking service successfully installed, the output should indicate three agents on the controller node and one agent on each compute node.
 
 * #### Cinder ####
-    Cinder is a block storage service in OpenStack. Block storage provides an infrastructure for managing strengths and interacts with OpenStack compute to generate volumes for instances. This service also enables the management of volume snapshots and volume types. The Cinder configuration references one storage node with an empty local block storage device.
+    Cinder is a block storage service in OpenStack. Block storage provides an infrastructure for managing volumes and interacts with OpenStack compute to generate volumes for instances. This service also enables the management of volume snapshots and volume types. The Cinder configuration references one storage node with an empty local block storage device.
 
 [//]: # (When opening file in Github, change [^1] to <sup>1</sup>)
 
@@ -121,7 +126,7 @@ RPC.cast does not require a response, which the above request means to launch th
 + #### Transformation of CLI request to running instances ####
     Three nova packages on the controller side; nova-API, nova-conductor, nova-scheduler; are related to creating instances. Nova-compute on the compute node supports several hypervisors to deploy instances or VMs. 
     
-    Nova-API's role in creating an instance is it launches a new situation. Nova-scheduler searches for the appropriate host to install the VM and nova-conductor connect between database and nova-compute. The below diagram shows the connection between each service.
+    Nova-API's role in creating an instance is it launches a new instance. Nova-scheduler searches for the appropriate host to install the VM and nova-conductor connect between database and nova-compute. The below diagram shows the connection between each service.
     ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
     1. Client requests for authentication to Keystone / Keystone pass authentication token to Client
     2. Client converts new instance request to REST API request and sends it to nova-API
