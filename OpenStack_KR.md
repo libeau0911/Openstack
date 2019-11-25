@@ -76,9 +76,9 @@ OpenStack
     
 * #### Neutron ####
     Neutron은 오픈스택의 네트워킹 서비스이다. 이 서비스는 다른 OpenStack 서비스로 관리되는 인터페이스 장치를 생성하여 네트워크에 연결할 수 있도록 한다. Neutron 서버는  API 요청을 승인하여 적절한 OpenStack Networking 플러그인으로 라우팅하여 조치를 취합니다. 이 서비스로 포트를 연결 및 분리, 네트워크 또는 서브넷을 생성, IP 주소를 제공하는 것이 가능하다. 또한 특정 플러그인의 네트워킹 상태를 저장하는 데이터베이스의 역할을 한다. Neutron server와 다양한 에이전트 간에 정보를 라우팅하기 위해서 메시지큐가 사용된다. 
-    Any given Networking set up has on or more external and internal networks. IP addresses are accessible by anyone who is physically on the external network. Internal networks connect directly to the VMs. For the outside networks to access VMs, and vice versa, routers between the networks are needed. Each router has a gateway that connects to an external network and one or more interfaces connected to internal networks. 
+    어떠한 네트워크 설정에는 하나 이상의 외부 및 내부 네트워크가 존재한다. IP 주소는 외부 네트워크에있는 모든 사람이 액세스 할 수 있는 반면, 내부 네트워크는 VM에 직접 연결이 된다. 외부 네트워크가 VM에 접근하거나 그 반대의 경우 네트워크 간의 라우터가 필요하다. 각 라우터에는 외부 네트워크에 연결되는 게이트웨이와 내부 네트워크에 연결된 하나 이상의 인터페이스가 있다.
     
-	Between two network options, I will configure with provider networks. Provider networks map to actual physical networks or VLANs and can only be set up by an admin.
+    두 가지 네트워크 방식 중, 해당 프로젝트에서는 프로바이더 네트워크를 구성할 것이다. 프로바이더 네트워크는 실제 물리적인 네트워크 및 VLAN에 연결되며 admin에 의해서만 설정이 가능하다.
     **ML2 plug-in**
     
     프로바이더 네트워크를 설정하기 위해서는 먼저 Modular Layer 2 (ML2) 플러그인을 구성해야한다. ML2 플러그인은 Linux-bridge 메커니즘을 이용해 인스턴스를 위한 layer-2(브리징과 스위칭) 가상 네트워킹 인프라를 구축한다. 다양한 type drivers 중, flat와 VLAN이 사용가능하도록 설정한다. 플랫 네트워크는 모든 인스턴스를 같은 네트워크 상에 있도록 한다. 예를 들어, 컴퓨트 노드와 네트워크 노드가 20.20.20.0/24를 사용한다고 하였을 때, VM 역시 같은 네트워크 상에 존재하게 된다. ML2 플로그인은 메커니즘 드라이버도 제공한다. 메커니즘 드라이버는 각각 다른 네트워크를 사용하는 컴퓨트 노드들의 연결이 가능하도록 한다. 해당 프로젝트에서는 Linux-bridge 메커니즘을 사용하였다.
