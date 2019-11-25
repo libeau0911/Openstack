@@ -105,70 +105,70 @@ OpenStack
 
 ### 3. 오픈스택에 인스턴스 설치 과정
 
-Below is the diagram that shows the request flow when launching an instance in OpenStack.
+아래는 오픈스택에 인스턴스를 설치하는 과정을 보여주는 다이어그램이다.
 ![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
 
-The diagram can be split into two big blocks; transformation of CLI request to running instances (Nova), network connections between compute nodes and instances (Neutron). During the request flow, there are two kinds of requests made in the message queue, RPC.call, and RPC.cast. In simple words, RPC.call waits for a response, while RPC.cast does not expect a response. Below is an example of RPC.call and RPC.cast.
-> Nova-API sends the rpc.call request to nova-scheduler expecting to get updated instance entry with host ID specified.
+오픈스택에 인스턴스를 설치하는 과정은 크게 CLI Request로 인스턴스가 설치되는 과정 (Nova), 컴퓨트 노드와 인스턴스 사이의 네트워크 연결 (Neutron)으로 나눌 수 있다. 이 두 과정을 설명하기에 앞서, 메시지큐를 이용하여 두 가지 요청이 일어나는데, RPC.call과 RPC.cast라고 하는 것들이다. 간단히 설명하자면, RPC.call은 대답을 요구하고, RPC.cast는 대답을 요구하지 않는다. 아래는 예시이다.
+> Nova-API는 nova-scheduler에게 인스턴스를 설치할 노드 정보를 받아오도록 RPC.call을 보낸다.
 
-Since nova-API have requested an RPC.call to nova-scheduler, the nova-scheduler should reply to nova-API with an updated instance entry with host ID identified.
+Nova-API는 nova-scheduler에게 RPC.call을 보냈기에, nova-scheduler은 인스턴스가 설치될 노드 정보를 반환하여 nova-API에게 전달할 것이다.
 
-> Nova-scheduler sends the RPC.cast request to nova-compute for launching the instance on the appropriate host.
+> Nova-scheduler은 nova-compute에게 인스턴스를 적절한 노드에 설치하도록 RPC.cast를 요청한다.
 
-RPC.cast does not require a response, which the above request means to launch the instance on the appropriate host without replying to nova-scheduler.
+RPC.cast는 따로 응답을 요구하지 않으므로, 위의 요청을 하였을 때 nova-scheduler에게 별도의 정보가 오지 않고 인스턴스는 설치될 것이다.
 
 + #### CLI Request로 인스턴스가 설치되는 과정 ####
-    Three nova packages on the controller side; nova-API, nova-conductor, nova-scheduler; are related to creating instances. Nova-compute on the compute node supports several hypervisors to deploy instances or VMs. 
-    
-    Nova-API's role in creating an instance is it launches a new situation. Nova-scheduler searches for the appropriate host to install the VM and nova-conductor connect between database and nova-compute. The below diagram shows the connection between each service.
+    컨트롤러 노드에서는 nova-API, nova-conductor, nova-scheduler이 새로운 인스턴스를 생성하는 데 연관이 있다.  컴퓨트 노드의 Nova-compute는 각종 하이퍼바이저를 지원한다. 
+    Nova-API의 역할은 새로운 인스턴스를 설치하는 것이다. Nova-scheduler은 인스턴스를 설치할 적절한 호스트를 검색하는 것, nova-conductor의 역할은 데이터베이스와 nova-compute 사이에서 정보를 전달해주는 것이다. 아래 다이어그램은 각 서비스들의 연결 상태를 보여준다.
     ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
-    1. Client requests for authentication to Keystone / Keystone pass authentication token to Client
-    2. Client converts new instance request to REST API request and sends it to nova-API
-    3. Nova-API receives the request and sends the request to Keystone to validate auth-token / Keystone confirms the token and sends it back
-    4. Nova-API interacts with the database ( MariaDB ) to create initial DB entry for a new instance
-    5. Nova-API sends the rpc.call request by message queue ( RabbitMQ ) to nova-scheduler to get updated instance entry with host ID specified
-    6. Nova-scheduler picks the request from the queue
-    7. Nova-scheduler interacts with the database to find  an appropriate host
-    8. Nova-scheduler sends the rpc.cast by the message queue to nova-compute for launching the instance on a suitable host
-    9. Nova-compute picks the request from the queue and sends the rpc.call request to nova-conductor to fetch the instance information
-    10. Nova-conductor picks the request from the queue
-    11. Nova-conductor interacts with the database and returns the instance information
-    12. Nova-conductor sends the rpc.cast by the message queue to nova-compute for returning the instance information
-    13. Nova-compute picks the instance information from the queue
+    1. Client는 Keystone에게 인증을 요청한다 / Keystone는 인증된 토큰을 Client에게 넘겨준다
+    2. Client는 새로운 인스턴스 요청을 REST API 요청으로 전환해 Nova-API에게 전달한다
+    3. Nova-API는 요청을 전달받은 후 Keystone에게 인증을 요청한다 / Keystone는 인증된 토큰을 Nova-API에게 넘겨준다
+    4. Nova-API는 데이터베이스로 새로우 인스턴스에 대한 DB 정보를 생성한다
+    5. Nova-API는 nova-scheduler에게 인스턴스를 설치할 노드 정보를 받아오도록 RPC.call을 보낸다
+    6. Nova-scheduler는 메시지큐에서 요청을 받아온다
+    7. Nova-scheduler는 데이터베이스에서 알맞은 호스트 정보를 검색한 후 반환한다
+    8. Nova-scheduler은 nova-compute에게 인스턴스를 적절한 노드에 설치하도록 RPC.cast를 요청한다
+    9. Nova-compute는 메시지큐에서 요청을 읽어들인 후 nova-conductor에게 인스턴스 정보를 요청하는 RPC.call을 보낸다
+    10. Nova-conductor는 메시지큐에서 요청을 읽어들인다
+    11. Nova-conductor는 데이터베이스에서 인스턴스 정보를 가져와 반환한다
+    12. Nova-conductor는 메시지큐를 통해 nova-compute로 인스턴스 정보에 대한 RPC.cast를 요청한다
+    13. Nova-compute는 메시지큐에서 요청을 읽어들인다
 
 + #### 컴퓨트 노드와 인스턴스 사이의 네트워크 연결 ####
-    Neutron is the network service in OpenStack. Neutron-DHCP-Agent and Neutron-Linuxbridge-Agent are the main factors needed while launching a new instance. Neutron-DHCP-Agent connects with dnsmasq, which assigns the IP address to VM. On the other hand, Neutron-Linuxbridge-Agent connects with libvirt. Libvirt is a virtualized library API that interacts with hypervisors that support Openstack.
+    Neutron은 오픈스택의 네트워크 서비스이다.
+    Neutron-DHCP-Agent과 Neutron-Linuxbridge-Agent는 새로운 인스턴스를 설치하는 데 필요한 주요 인자들이다.  Neutron-DHCP-Agent는 dnsmasq에 연결해 VM에 IP 주소를 할당해주며, Neutron-Linuxbridge-Agent는 libvirt와 연결한다. Libvirt는 오픈스택을 지원하는 하이퍼바이저들과 상호작용하는 가상화 라이브러리 API이다. 
     ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
-    1. Nova-compute passes auth-token to Neutron-server to allocate and configure the network for the instance
-    2. Neutron-server sends auth-token to Keystone for validation / Keystone confirms the token and sends it back
-    3. Neutron-server sends the rpc.call request by message queue to request an IP address and L2 configuration
+    1. Nova-compute는 인스턴스의 네트워크를 할당 및 구성해주기 위해 Neutron-server에게 auth-token을 넘겨준다
+    2. Neutron-server는 인증을 위해 auth-token을 Keystone에게 보낸다 / Keystone은 해당 토큰을 인증해주고 Neutron-server로 반환한다
+    3. Neutron-server은 메시지큐에게 IP 주소와 L2 구성을 요청하는 RPC.call을 보낸다
     
-	**The request of the IP address**
+	**IP 주소 요청**
     
-    4. Neutron-DHCP-Agent picks the request from the queue
-    5. Neutron-DHCP-Agent interacts with dnsmasq to allocate the IP address
-    6. Neutron-DHCP-Agent returns the IP address information
-    7. Neutron-server reads the IP address from the message queue
+    4. Neutron-DHCP-Agent는 메시지큐에서 요청을 가져온다
+    5. Neutron-DHCP-Agent는 dnsmasq와 연결하여 IP주소를 할당한다
+    6. Neutron-DHCP-Agent는 IP 주소 정보를 반환한다
+    7. Neutron-server는 메시지큐를 통해 정보를 읽어들인다
     
-	**The request of L2 configuration**
+	**L2 구성 요청**
     
-    8. Neutron-Linuxbridge-Agent picks the request from the queue
-    9. Neutron-Linuxbridge-Agent interacts with libvirt to configure Linux bridge
-    10. Neutron-Linuxbridge-Agent returns the Linux bridge configuration
-    11. Neutron-server reads the configuration from the message queue
-    12. Neutron-server saves instance network state in the database
-    13. Neutron-server passes the network information to Nova-compute
+    8. Neutron-Linuxbridge-Agent는 메시지큐에서 요청을 가져온다
+    9. Neutron-Linuxbridge-Agent는 libvirt와 연결하여 Linux bridge를 구성한다
+    10. Neutron-Linuxbridge-Agent는 Linux bridge configuration를 반환한다
+    11. Neutron-server는 메시지큐로부터 정보를 읽어들인다
+    12. Neutron-server는 인스턴스 네트워크 상태를 데이터베이스에 저장한다
+    13. Neutron-server는 네트워크 정보를 Nova-compute에 넘겨준다
      
 + #### 새로운 인스턴스와 기타 서비스들과의 연결 과정 ####
     **Glance**
-    1. Nova-compute does the REST call to glance-API to get Image URI by Image ID from Glance
-    2. Glance-API validates the auth-token with keystone
-    3. Glance-API returns the image URI to Nova-compute
+    1. Nova-compute는 Glance로부터 이미지 URI를 가져오도록 glance-API에게 요청한다
+    2. Glance-API는 keystone을 통해 auth-token 인증을 받는다 
+    3. Glance-API는 Nova-compute에게 image-URI를 보내준다
 
     **Cinder**
-    1. Nova-compute requests for the volume data to Cinder
-    2. Cinder-API validates the auth-token with keystone
-    3. Cinder-API returns the volume information to Nova-compute
+    1. Nova-compute는 Cinder에게 volume 정보를 요청한다
+    2. Cinder-API는 keystone을 통해 auth-token 인증을 받는다
+    3. Cinder-API는 Nova-compute에게 volume 정보를 보내준다
     
 ---
 
