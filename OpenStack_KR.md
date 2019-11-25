@@ -41,13 +41,13 @@ OpenStack
 
 ### 2. 오픈스택 서비스 종류 및 정의 
 
-There are various kinds of services in OpenStack. As a minimum, the following services are essential when you launch an OpenStack project.
+오픈스택에는 다양한 종류의 서비스들이 존재한다. 그 중 오픈스택 프로젝트를 생성하는 데 필수적으로 필요한 서비스들에 대해서만 설명하도록 하겠다.
 * #### Keystone ####
-    Keystone is an identity service in OpenStack. It manages authentication and authorization of services required in cloud needs. Each OpenStack service in the deployment needs a service entry with corresponding endpoints stored in the Identity Service. 
+    Keystone은 오픈스택의 인증 서비스이다. 이 서비스는 클라우드가 필요로 하는 서비스들에 대한 인증과 권한을 부여해주는 역할을 가지고 있다. 모든 오픈스택 서비스들은 Keystone을 거쳐야만 자원을 사용할 수 있다.
 * #### Glance ####
-    Glance is an image service that enables users to discover, register, and retrieve virtual machine images. It supports the storage of disk or server images on various repository types. The OpenStack image service includes glance-API and glance-registry. Glance-API accept image API calls for image discovery, retrieval, and storage. Glance-registry stores, processes, and retrieves metadata about size and types of images. The image metadata is in the database, in my case, MariaDB. Exposing glance-registry to users is unnecessary, for it is a private internal service.
+    Glance는 사용자들이 VM의 이미지의 삭제ㆍ정보ㆍ수정 등 관리를 할 수 있도록 하는 서비스이다. 여기서 이미지란, 인스턴스에 필요한 운영체제가 설치된 이미지를 뜻한다. 이 서비스는 다양한 리포지토리의 서버 이미지 저장을 지원한다. Glance는 Glance-API와 Glance-registry로 구성되며, Glance-API는 이미지 삭제ㆍ정보ㆍ수정에 대한 API 요청을 수락하는 역할을 한다. Glance-registry는 크기 및 이미지 종류와 같은 메타데이터의 삭제ㆍ정보ㆍ저장을 맡고 있다. 이미지 메타데이터의 경우, 데이터베이스에 저장되어 있는데, 해당 프로젝트에서는 MariaDB를 사용한다. Glance-registry는 사용자에게 권한이 없는 서비스이다.
 * #### Placement ####
-    The placement API service was introduced within the nova repository and extracted to the placement repository in the Stein release. It is used to track resource provider inventories and usages. Placement is required by some of the other OpenStack services, notably nova. Two processes, Nova-compute and Nova-scheduler, host most of Nova's interaction with Placement.
+    Placement 서비스는 초기에 Nova 내부에 존재하던 서비스이며, Stein 버전에서 별도의 서비스로 소개되었다. 이 서비스는 리소스 프로바이더에 대한 인벤토리와 사용정보를 추적하는 데 사용된다. Placement는 주로 다른 서비스들이 요구하는 데, 특히 Nova에서 필요로 하는 서비스이다. Nova-compute, Nova-scheduler과 같은 프로세스들이 대표적으로 Placement를 이용한다.
 * #### Nova ####
     Openstack Compute is used to host and manage cloud computing systems. Nova consists of the following areas and their components.
 
