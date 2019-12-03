@@ -28,12 +28,12 @@ OpenStack
     - 개념적 구조   
     
         오픈스택은 컴퓨팅, 네트워킹, 스토리지 등을 처리하는 핵심 서비스들을 중심으로, 대시보드, 오케스트레이션 등 부가적인 서비스들을 처리할 수 있도록 하는 인프라를 생성할 수 있다. 아래 다이어그램은 오픈스택 서비스들 간의 관계를 보여준다.
-        ![Conceptual Architecture](/Conceptual_Architecture.png)
+        ![Conceptual Architecture](https://raw.githubusercontent.com/libeau0911/Openstack/master/images/Conceptual_Architecture.png)
     
     - Provider Network Architecture
     
         아래는 프로바이더 네트워크의 서비스 레이아웃을 보여주는 이미지이다.
-        ![Provider Network Service Layout](/Provider_Network.png)
+        ![Provider Network Service Layout](https://raw.githubusercontent.com/libeau0911/Openstack/master/images/Provider_Network.png)
         
         오픈스택을 이용해 인스턴스를 설치하기 위해서는 최소한 두 개의 노드를 필요로 한다. 상단의 이미지에서 볼 수 있듯이, 컨트롤러 노드는 인증 서비스, 이미지 서비스, 컴퓨트에 대한 관리, 네트워크 관리, 네트워크 에이전트들, 대시보드 등을 구동한다.또한 데이터베이스, 메시지큐, NTP와 같이 구동의 지원을 해주는 서비스들도 컨트롤러 노드에 포함된다. 컴퓨트 노드는 인스턴스를 작동하는 하이퍼바이저를 포함하고 있다. 이 노드는 인스턴스들과 VM을 연결해주는 네트워크 서비스 에이전트들 역시 포함한다.
         
@@ -116,7 +116,7 @@ OpenStack
 ### 3. 오픈스택에 인스턴스 설치 과정
 
 아래는 오픈스택에 인스턴스를 설치하는 과정을 보여주는 다이어그램이다.
-![Request Flow for Launching Instance](/Request_Flow_Diagram.PNG)
+![Request Flow for Launching Instance](https://raw.githubusercontent.com/libeau0911/Openstack/master/images/Request_Flow_Diagram.PNG)
 
 오픈스택에 인스턴스를 설치하는 과정은 크게 CLI Request로 인스턴스가 설치되는 과정 (Nova), 컴퓨트 노드와 인스턴스 사이의 네트워크 연결 (Neutron)으로 나눌 수 있다. 이 두 과정을 설명하기에 앞서, 메시지큐를 이용하여 두 가지 요청이 일어나는데, RPC.call과 RPC.cast라고 하는 것들이다. 간단히 설명하자면, RPC.call은 대답을 요구하고, RPC.cast는 대답을 요구하지 않는다. 아래는 예시이다.
 > Nova-API는 nova-scheduler에게 인스턴스를 설치할 노드 정보를 받아오도록 RPC.call을 보낸다.
@@ -130,7 +130,7 @@ RPC.cast는 따로 응답을 요구하지 않으므로, 위의 요청을 하였�
 + #### CLI Request로 인스턴스가 설치되는 과정 ####
     컨트롤러 노드에서는 nova-API, nova-conductor, nova-scheduler이 새로운 인스턴스를 생성하는 데 연관이 있다.  컴퓨트 노드의 Nova-compute는 각종 하이퍼바이저를 지원한다. 
     Nova-API의 역할은 새로운 인스턴스를 설치하는 것이다. Nova-scheduler은 인스턴스를 설치할 적절한 호스트를 검색하는 것, nova-conductor의 역할은 데이터베이스와 nova-compute 사이에서 정보를 전달해주는 것이다. 아래 다이어그램은 각 서비스들의 연결 상태를 보여준다.
-    ![Transformation of CLI request to running instances](/Nova_Request_Flow.png)
+    ![Transformation of CLI request to running instances](https://raw.githubusercontent.com/libeau0911/Openstack/master/images/Nova_Request_Flow.png)
     1. Client는 Keystone에게 인증을 요청한다 / Keystone는 인증된 토큰을 Client에게 넘겨준다
     2. Client는 새로운 인스턴스 요청을 REST API 요청으로 전환해 Nova-API에게 전달한다
     3. Nova-API는 요청을 전달받은 후 Keystone에게 인증을 요청한다 / Keystone는 인증된 토큰을 Nova-API에게 넘겨준다
@@ -148,7 +148,7 @@ RPC.cast는 따로 응답을 요구하지 않으므로, 위의 요청을 하였�
 + #### 컴퓨트 노드와 인스턴스 사이의 네트워크 연결 ####
     Neutron은 오픈스택의 네트워크 서비스이다.
     Neutron-DHCP-Agent과 Neutron-Linuxbridge-Agent는 새로운 인스턴스를 설치하는 데 필요한 주요 인자들이다.  Neutron-DHCP-Agent는 dnsmasq에 연결해 VM에 IP 주소를 할당해주며, Neutron-Linuxbridge-Agent는 libvirt와 연결한다. Libvirt는 오픈스택을 지원하는 하이퍼바이저들과 상호작용하는 가상화 라이브러리 API이다. 
-    ![Network Connections between Commpute Nodes and Instances](/Neutron_Request_Flow.PNG)
+    ![Network Connections between Commpute Nodes and Instances](https://raw.githubusercontent.com/libeau0911/Openstack/master/images/Neutron_Request_Flow.PNG)
     1. Nova-compute는 인스턴스의 네트워크를 할당 및 구성해주기 위해 Neutron-server에게 auth-token을 넘겨준다
     2. Neutron-server는 인증을 위해 auth-token을 Keystone에게 보낸다 / Keystone은 해당 토큰을 인증해주고 Neutron-server로 반환한다
     3. Neutron-server은 메시지큐에게 IP 주소와 L2 구성을 요청하는 RPC.call을 보낸다
